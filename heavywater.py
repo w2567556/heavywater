@@ -9,7 +9,7 @@ from collections import Counter
 from numpy.linalg import norm
 from time import time
 from sys import stdout
-from gensim import corpora, models, similarities
+#from gensim import corpora, models, similarities
 
 
 
@@ -42,12 +42,12 @@ print(len(count))
 v = train_data
 model = NMF(n_components=14, alpha=0.01)
 
-# W = model.fit_transform(v)
-# H = model.components_
-# print (W)
-# print (H)
-# print(W.dot(H))
-# print(v)
+W = model.fit_transform(v)
+H = model.components_
+print (W)
+print (H)
+print(W.dot(H))
+print(v)
 
-lsi = models.LsiModel(v, id2word=dictionary, num_topics=14)
-lsi.print_topics(14)
+# lsi = models.LsiModel(v, id2word=dictionary, num_topics=14)
+# lsi.print_topics(14)
