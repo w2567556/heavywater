@@ -8,19 +8,19 @@ train model, model already exists, please delete model first:
 
 curl -X GET \
     -H "Content-Type: application/json" \
-    "http://18.222.239.222:8000/api/v1/train"
+    "http://13.58.131.159:8000/api/v1/train"
 
 test given message:
 
 curl -X POST \
     -H "Content-Type: application/json" \
     -d '{"message": "b44297cf911c 84884d80641d bad6ff5dd7bc bad6ff5dd7bc"}'\
-    "http://18.222.239.222:8000/api/v1/predict"
+    "http://13.58.131.159:8000/api/v1/predict"
 
 delete model:
 curl -X GET \
     -H "Content-Type: application/json" \
-    "http://18.222.239.222:8000/api/v1/delete"
+    "http://13.58.131.159:8000/api/v1/delete"
 
 # how to use website
 
