@@ -1,51 +1,43 @@
-# Copyright 2016 Google Inc. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
-import logging
-import os
-
-from flask import Flask
-from flask import request, jsonify
-
-from flask_caching import Cache
-app = Flask(__name__)
-app.cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+from scripts.dictionary import generate_dictionary
+from scripts.lsi import generate_lsi
+from scripts.predictor import generator_predictor
+from scripts.tfidf import generate_tfidf
+from scripts.test import test_new
+from scripts.file import file_management
+from scripts.delete import delete_tmp
+import os, time
 
 
-from harvest import category_labels
-import harvest.transactions_processor as tp
-import harvest.bank_fees
+def train_model():
+    path_dictionary, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel,path_tmp_predictor = file_management()
+    sample_rate = 1
+    start_time = time.time()
+    dictionary = generate_dictionary(path_dictionary, sample_rate)
+    corpus_tfidf = generate_tfidf(dictionary, path_tmp_tfidf, sample_rate)
+    corpus_lsi, lsi_model = generate_lsi(dictionary, corpus_tfidf, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel)
+    predictor, train_err_ratio, train_cm, test_err_ratio, test_cm = generator_predictor(corpus_lsi, path_tmp_lsi, path_tmp_predictor)
+    end_train_time  = time.time()
+    consume_time = end_train_time-start_time
+    print('Time consuming for training model and test given data:{x}s'.format(x=consume_time))
+    return dictionary, lsi_model, predictor, train_err_ratio, train_cm, test_err_ratio, test_cm, consume_time
 
-import json
+def test_model(dictionary, lsi_model, predictor, demo_doc):
 
-@app.cache.cached(timeout=50, key_prefix='harvest_category_classifications')
-def load_data():
-    return category_labels.loadLabeled()
-
-@app.route('/api/v1/computation', methods = ['POST'])
-def process_transactions():
-    data = json.loads(request.data)
-    app.logger.info('Passed in options:')
-    app.logger.info(data['request_options'])
-    options = tp.request_options(data['request_options'])
-    app.logger.info('Processed_options:')
-    app.logger.info(options)
-    output = tp.process(data['transactions'], load_data(), options)
-    return jsonify(output)
+    path_dictionary, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel,path_tmp_predictor = file_management()
+    start_time = time.time()
+    result = test_new(dictionary, lsi_model, predictor, path_dictionary, path_tmp_lsi, path_tmp_lsimodel, path_tmp_predictor, demo_doc)
+    end_test_time = time.time()
+    consume_time = end_test_time-start_time
+    print('Time consuming for training model:{x}s'.format(x=consume_time))
+    return result, consume_time
 
 
 if __name__ == '__main__':
-    # This is used when running locally. Gunicorn is used to run the
-    # application on Google App Engine. See entrypoint in app.yaml.
-    app.run(host='127.0.0.1', port=8181, debug=True)
+
+    demo_doc = """
+    b44297cf911c 84884d80641d bad6ff5dd7bc bad6ff5dd7bc
+    """
+    delete_tmp()
+    dictionary, lsi_model, predictor, train_err_ratio, train_cm, test_err_ratio, test_cm, consume_time = train_model()
+    result, consume_time = test_model(dictionary, lsi_model, predictor, demo_doc)

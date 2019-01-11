@@ -1,8 +1,20 @@
-import urlfetch
-url = "https://api.quovo.com/v3/accounts/18298981/transactions"
-
-#headers = "Authorization: Bearer 0d180d0c1b3cbb37312752fde85bbe4ed4e54e58df2987d47481d360e60080e5"
-result = urlfetch.fetch(
-        url=url,
-        headers= {"Authorization": "Bearer 0d180d0c1b3cbb37312752fde85bbe4ed4e54e58df2987d47481d360e60080e5"})
-print(result.content)
+# create data generator
+class csvStream(object):
+    def __init__(self,path):
+        self.path=path
+    def __iter__(self):
+        with open(self.path, 'r') as csv:
+            for line in csv:
+                text = line[:-1]
+                index = 0
+                try:
+                    while (line[index].isupper()) or (line[index] == ' ') or (line[index] == ',') or (line[index] == '-') :
+                        text = text[1:]
+                        index = index + 1
+                except:
+                    pass
+                label = line[:index-1]
+                feature = text.split(' ')
+                #if feature[0] == '':
+                    #continue
+                yield  label,feature

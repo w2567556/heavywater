@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title>Heavywater problem</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/interface.css') }}">
+</head>
+
+
+<body>
+	<H2>The text submitted is classified as:</H2>
+  <h2>{{result}}</h2>
+  <H2>Time consuming for testing given message(s):</H2>
+  <h2>{{consume_time}}</h2>
+  <button type="button"  onclick="window.location.href='/'">return back</button>
+</body>
+
+</html>

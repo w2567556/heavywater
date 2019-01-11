@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title>Heavywater problem</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/interface.css') }}">
+</head>
+
+
+<body>
+  <table border="1"  width= "400" align='left'>
+    <tr>
+      <th>Train error ratio</th>
+      <th>Text error ratio</th>
+    </tr>
+    <tr>
+      <td>{{train_err_ratio}}</td>
+      <td>{{test_err_ratio}}</td>
+    </tr>
+  </table>
+  <br/><br/><br/><br/>
+<!--  <h2>Train confusion matrix</h2>
+  <h1>{{train_cm}}</h1>
+  <h2>Text confusion matrix</h2>
+  <h1>{{test_cm}}</h1> -->
+  <H2>Time consuming for training model and test given data(s):</H2>
+  <h2>{{consume_time}}</h2>
+  <button type="button"  onclick="window.location.href='/'">return back</button>
+
+</body>
+
+
+</html>

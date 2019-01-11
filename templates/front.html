@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<style>
+.textarea{
+  width:200px;
+  height:100px;
+  overflow:scroll;
+  resize:none;
+}
+</style>
+<head>
+  <meta charset="UTF-8">
+	<title>Heavywater problem</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/interface.css') }}">
+</head>
+
+<script type="text/javascript">
+	function removeHide() {
+    	var element = document.getElementById("loading");
+    	element.classList.remove("hide");
+	}
+</script>
+<div class="testarea">
+<body>
+	<H2>Please create new model first using given dataset and use the model to test other similar format text:</H2>
+  <br />
+  <form id="dashForm" onsubmit="removeHide()" method='get'>
+    <input id="trainModel"  type="submit" value="Train Model using exsit data" >
+    <input id="deletModel"  type="submit" value="Delete all trained model and vector" >
+	</form>
+</div>
+<br />
+<br />
+</table>
+  <form id="predictor" method="post" action="/testText">
+  <textarea name="mytextarea" class='textarea' width="100px" height="200px" resize="none"></textarea>
+  <br />
+	<input id="testText"  type="submit" value="Test new material" >
+  </form>
+
+	<!-- <h4 class="hide" id="loading" style="color: red">Please wait. Logging in...</h4> -->
+
+</body>
+<script>
+
+	document.getElementById("trainModel").onclick = function() {
+	  document.getElementById("dashForm").action = "/trainModel";
+	};
+	document.getElementById("deletModel").onclick = function() {
+		document.getElementById("dashForm").action = "/deleteModel";
+	};
+
+</script>
+
+
+</html>
