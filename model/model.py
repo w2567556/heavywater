@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn import datasets
-from metric import checkPred
+from model.metric import checkPred
+#from metric import checkPred
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
@@ -31,7 +32,7 @@ def rf_classify(train_set,train_tag,test_set,test_tag):
     #               "max_depth" : [25, 30, 35],
     #               "min_samples_split": [2, 5, 7],
     #               "min_samples_leaf": [0.5, 1, 2]}
-    clf =  RandomForestClassifier(bootstrap=false, max_features='auto', n_estimators=1500, max_depth=30, min_samples_split=5, min_samples_leaf=1)
+    clf =  RandomForestClassifier(bootstrap=False, max_features='auto', n_estimators=100, max_depth=30, min_samples_split=5, min_samples_leaf=1)
     #rfc = RandomForestClassifier()
     #clf = RandomizedSearchCV(rfc, random_grid, n_jobs=-1, cv=5)
     #clf = GridSearchCV(rfc, param_grid, n_jobs=-1, cv=5)

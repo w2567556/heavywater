@@ -1,8 +1,5 @@
 from flask import Flask, Config as BaseConfig, jsonify, render_template, redirect, request
-import argparse
-import yaml
-import json
-import time
+import json, time
 from main import train_model, test_model
 import pandas as pd
 from scripts.delete import delete_tmp
@@ -26,7 +23,6 @@ def root():
 @app.route('/trainModel', methods = ['GET'])
 def train():
     dictionary, lsi_model, predictor, train_err_ratio, train_cm, test_err_ratio, test_cm, consume_time_train = train_model()
-    print(type(train_cm))
     return render_template('metrics.html',  train_err_ratio=train_err_ratio, train_cm=train_cm, test_err_ratio=test_err_ratio, test_cm=test_cm, consume_time=consume_time_train)
 
 @app.route('/deleteModel', methods = ['GET'])
