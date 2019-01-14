@@ -8,23 +8,27 @@ train model, model already exists, please delete model first:
 
 curl -X GET \
     -H "Content-Type: application/json" \
-    "http://13.58.131.159:8000/api/v1/train"
+    "http://18.222.196.57:8000/api/v1/train"
 
 test given message:
 
 curl -X POST \
     -H "Content-Type: application/json" \
     -d '{"message": "b44297cf911c 84884d80641d bad6ff5dd7bc bad6ff5dd7bc"}'\
-    "http://13.58.131.159:8000/api/v1/predict"
+    "http://18.222.196.57:8000/api/v1/predict"
 
 delete model:
 curl -X GET \
     -H "Content-Type: application/json" \
-    "http://13.58.131.159:8000/api/v1/delete"
+    "http://18.222.196.57:8000/api/v1/delete"
 
 # how to use website
+url for website http://18.222.196.57:8000
 
-The train model has been built using given data, so user can directly test their text in the testarea.
+The train model has been built using given data and sample rate is 10, and the error rate is 0.23. But if you use local machine or select a server which has a larger memory to run the program with sample rate = 1, the accuracy can reach 0.17.
+
+User can directly test their text in the testarea.
+
 The format of message in testarea should like this(no other symbol):
   b44297cf911c 84884d80641d bad6ff5dd7bc bad6ff5dd7bc
 
@@ -32,8 +36,8 @@ If user want to check the train error rate, please delete model first and then t
 
 User can get confusion matrix using api.
 
-
 # output
+
 The number of trees in random forest :1500
 train error: 0.005
 confusion matrix for training  [[3846, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 2], [0, 506, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], [0, 0, 186, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 178, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 15292, 14, 2, 0, 1, 0, 10, 1, 2, 6], [1, 0, 0, 0, 11, 8462, 0, 0, 3, 0, 14, 1, 0, 1], [0, 0, 0, 0, 13, 5, 205, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 602, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3, 0, 0, 721, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 3525, 1, 0, 0, 2], [1, 0, 0, 0, 0, 8, 0, 0, 0, 0, 7197, 0, 0, 1], [20, 3, 1, 0, 37, 22, 0, 2, 0, 5, 23, 642, 0, 21], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 567, 0], [2, 0, 0, 0, 5, 0, 0, 0, 0, 4, 2, 0, 0, 7693]]

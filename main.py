@@ -14,8 +14,8 @@ def train_model():
     sample_rate = 1
     start_time = time.time()
     dictionary = generate_dictionary(path_dictionary, sample_rate)
-    corpus_tfidf = generate_tfidf(dictionary, path_tmp_tfidf, sample_rate)
-    corpus_lsi, lsi_model = generate_lsi(dictionary, corpus_tfidf, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel)
+    corpus_tfidf = generate_tfidf(dictionary, path_dictionary, path_tmp_tfidf, sample_rate)
+    corpus_lsi, lsi_model = generate_lsi(dictionary, corpus_tfidf, path_dictionary, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel)
     predictor, train_err_ratio, train_cm, test_err_ratio, test_cm = generator_predictor(corpus_lsi, path_tmp_lsi, path_tmp_predictor)
     end_train_time  = time.time()
     consume_time = end_train_time-start_time

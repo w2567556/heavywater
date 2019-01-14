@@ -3,7 +3,7 @@ import os,time
 from gensim import corpora, models
 import pickle as pkl
 
-def generate_lsi(dictionary, corpus_tfidf, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel):
+def generate_lsi(dictionary, corpus_tfidf, path_dictionary, path_tmp_tfidf, path_tmp_lsi, path_tmp_lsimodel):
     corpus_lsi = None
     lsi_model = None
     if not os.path.exists(path_tmp_lsi):

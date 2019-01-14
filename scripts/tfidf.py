@@ -3,7 +3,7 @@ import os,time
 from gensim import corpora, models
 from getData.data import csvStream
 
-def generate_tfidf(dictionary, path_tmp_tfidf, n):
+def generate_tfidf(dictionary, path_dictionary, path_tmp_tfidf, n):
     corpus_tfidf = None
     if not os.path.exists(path_tmp_tfidf):
         print('=== No tfidf vector in the current folder. Begin generating tfidf vector ===')
